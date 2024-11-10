@@ -566,7 +566,12 @@ class SX126x: public PhysicalLayer {
       \param addr Address to send the data to. Will only be added if address filtering was enabled.
       \returns \ref status_codes
     */
-    int16_t transmit(const uint8_t* data, size_t len, uint8_t addr = 0) override;
+    int16_t transmit(const uint8_t* data, size_t len, uint8_t addr = 0) 
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
 
     /*!
       \brief Blocking binary receive method.
@@ -575,42 +580,76 @@ class SX126x: public PhysicalLayer {
       \param len Number of bytes to send.
       \returns \ref status_codes
     */
-    int16_t receive(uint8_t* data, size_t len) override;
+    int16_t receive(uint8_t* data, size_t len)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
 
     /*!
       \brief Starts direct mode transmission.
       \param frf Raw RF frequency value. Defaults to 0, required for quick frequency shifts in RTTY.
       \returns \ref status_codes
     */
-    int16_t transmitDirect(uint32_t frf = 0) override;
+    int16_t transmitDirect(uint32_t frf = 0)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
 
     /*!
       \brief Starts direct mode reception. Only implemented for PhysicalLayer compatibility, as %SX126x series does not support direct mode reception.
       Will always return RADIOLIB_ERR_UNKNOWN.
       \returns \ref status_codes
     */
-    int16_t receiveDirect() override;
+    int16_t receiveDirect()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Performs scan for LoRa transmission in the current channel. Detects both preamble and payload.
       Configuration defaults to the values recommended by AN1200.48.
       \returns \ref status_codes
     */
-    int16_t scanChannel() override;
+    int16_t scanChannel()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Performs scan for LoRa transmission in the current channel. Detects both preamble and payload.
       \param config CAD configuration structure.
       \returns \ref status_codes
     */
-    int16_t scanChannel(const ChannelScanConfig_t &config) override;
+    int16_t scanChannel(const ChannelScanConfig_t &config)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets the module to sleep mode. To wake the device up, call standby().
       Overload with warm start enabled for PhysicalLayer compatibility.
       \returns \ref status_codes
     */
-    int16_t sleep() override; 
+    int16_t sleep()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
     
     /*!
       \brief Sets the module to sleep mode. To wake the device up, call standby().
@@ -624,7 +663,13 @@ class SX126x: public PhysicalLayer {
       \brief Sets the module to standby mode (overload for PhysicalLayer compatibility, uses 13 MHz RC oscillator).
       \returns \ref status_codes
     */
-    int16_t standby() override;
+    int16_t standby()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets the module to standby mode.
@@ -652,34 +697,70 @@ class SX126x: public PhysicalLayer {
       \brief Sets interrupt service routine to call when a packet is received.
       \param func ISR to call.
     */
-    void setPacketReceivedAction(void (*func)(void)) override;
+    void setPacketReceivedAction(void (*func)(void))
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Clears interrupt service routine to call when a packet is received.
     */
-    void clearPacketReceivedAction() override;
+    void clearPacketReceivedAction()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets interrupt service routine to call when a packet is sent.
       \param func ISR to call.
     */
-    void setPacketSentAction(void (*func)(void)) override;
+    void setPacketSentAction(void (*func)(void))
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Clears interrupt service routine to call when a packet is sent.
     */
-    void clearPacketSentAction() override;
+    void clearPacketSentAction()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets interrupt service routine to call when a channel scan is finished.
       \param func ISR to call.
     */
-    void setChannelScanAction(void (*func)(void)) override;
+    void setChannelScanAction(void (*func)(void))
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Clears interrupt service routine to call when a channel scan is finished.
     */
-    void clearChannelScanAction() override;
+    void clearChannelScanAction()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Interrupt-driven binary transmit method.
@@ -689,13 +770,25 @@ class SX126x: public PhysicalLayer {
       \param addr Address to send the data to. Will only be added if address filtering was enabled.
       \returns \ref status_codes
     */
-    int16_t startTransmit(const uint8_t* data, size_t len, uint8_t addr = 0) override;
+    int16_t startTransmit(const uint8_t* data, size_t len, uint8_t addr = 0)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Clean up after transmission is done.
       \returns \ref status_codes
     */
-    int16_t finishTransmit() override;
+    int16_t finishTransmit()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
     
     /*!
       \brief Interrupt-driven receive method with default parameters.
@@ -703,7 +796,13 @@ class SX126x: public PhysicalLayer {
 
       \returns \ref status_codes
     */
-    int16_t startReceive() override;
+    int16_t startReceive()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Interrupt-driven receive method. DIO1 will be activated when full packet is received.
@@ -760,14 +859,26 @@ class SX126x: public PhysicalLayer {
       When more bytes than received are requested, only the number of bytes requested will be returned.
       \returns \ref status_codes
     */
-    int16_t readData(uint8_t* data, size_t len) override;
+    int16_t readData(uint8_t* data, size_t len)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
     
     /*!
       \brief Interrupt-driven channel activity detection method. DIO1 will be activated
       when LoRa preamble is detected, or upon timeout. Defaults to CAD parameter values recommended by AN1200.48.
       \returns \ref status_codes
     */
-    int16_t startChannelScan() override;
+    int16_t startChannelScan()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Interrupt-driven channel activity detection method. DIO1 will be activated
@@ -775,13 +886,25 @@ class SX126x: public PhysicalLayer {
       \param config CAD configuration structure.
       \returns \ref status_codes
     */
-    int16_t startChannelScan(const ChannelScanConfig_t &config) override;
+    int16_t startChannelScan(const ChannelScanConfig_t &config)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Read the channel scan result
       \returns \ref status_codes
     */
-    int16_t getChannelScanResult() override;
+    int16_t getChannelScanResult()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     // configuration methods
 
@@ -832,35 +955,65 @@ class SX126x: public PhysicalLayer {
       \param preambleLength Preamble length to be set in symbols (LoRa) or bits (FSK).
       \returns \ref status_codes
     */
-    int16_t setPreambleLength(size_t preambleLength) override;
+    int16_t setPreambleLength(size_t preambleLength)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets FSK frequency deviation. Allowed values range from 0.0 to 200.0 kHz.
       \param freqDev FSK frequency deviation to be set in kHz.
       \returns \ref status_codes
     */
-    int16_t setFrequencyDeviation(float freqDev) override;
+    int16_t setFrequencyDeviation(float freqDev)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets FSK bit rate. Allowed values range from 0.6 to 300.0 kbps.
       \param br FSK bit rate to be set in kbps.
       \returns \ref status_codes
     */
-    int16_t setBitRate(float br) override;
+    int16_t setBitRate(float br)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Set data.
       \param dr Data rate struct. Interpretation depends on currently active modem (FSK or LoRa).
       \returns \ref status_codes
     */
-    int16_t setDataRate(DataRate_t dr) override;
+    int16_t setDataRate(DataRate_t dr)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Check the data rate can be configured by this module.
       \param dr Data rate struct. Interpretation depends on currently active modem (FSK or LoRa).
       \returns \ref status_codes
     */
-    int16_t checkDataRate(DataRate_t dr) override;
+    int16_t checkDataRate(DataRate_t dr)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets FSK receiver bandwidth. Allowed values are 4.8, 5.8, 7.3, 9.7, 11.7, 14.6, 19.5,
@@ -887,7 +1040,13 @@ class SX126x: public PhysicalLayer {
       \param sh Time-bandwidth product of Gaussian filter to be set.
       \returns \ref status_codes
     */
-    int16_t setDataShaping(uint8_t sh) override;
+    int16_t setDataShaping(uint8_t sh)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets FSK sync word in the form of array of up to 8 bytes.
@@ -896,7 +1055,13 @@ class SX126x: public PhysicalLayer {
       \param len FSK sync word length in bytes.
       \returns \ref status_codes
     */
-    int16_t setSyncWord(uint8_t* syncWord, size_t len) override;
+    int16_t setSyncWord(uint8_t* syncWord, size_t len)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets FSK sync word in the form of array of up to 8 bytes.
@@ -975,7 +1140,13 @@ class SX126x: public PhysicalLayer {
       Overload with packet mode enabled for PhysicalLayer compatibility.
       \returns RSSI value in dBm.
     */
-    float getRSSI() override;
+    float getRSSI()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Gets RSSI (Recorded Signal Strength Indicator).
@@ -988,7 +1159,13 @@ class SX126x: public PhysicalLayer {
       \brief Gets SNR (Signal to Noise Ratio) of the last received packet. Only available for LoRa modem.
       \returns SNR of the last received packet in dB.
     */
-    float getSNR() override;
+    float getSNR()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Gets frequency error of the latest received packet.
@@ -1004,7 +1181,13 @@ class SX126x: public PhysicalLayer {
       \param update Update received packet length. Will return cached value when set to false.
       \returns Length of last received packet in bytes.
     */
-    size_t getPacketLength(bool update = true) override;
+    size_t getPacketLength(bool update = true)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Query modem for the packet length of received payload and Rx buffer offset.
@@ -1033,34 +1216,64 @@ class SX126x: public PhysicalLayer {
       \param len Payload length in bytes.
       \returns Expected time-on-air in microseconds.
     */
-    RadioLibTime_t getTimeOnAir(size_t len) override;
+    RadioLibTime_t getTimeOnAir(size_t len)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Calculate the timeout value for this specific module / series (in number of symbols or units of time)
       \param timeoutUs Timeout in microseconds to listen for
       \returns Timeout value in a unit that is specific for the used module
     */
-    RadioLibTime_t calculateRxTimeout(RadioLibTime_t timeoutUs) override;
+    RadioLibTime_t calculateRxTimeout(RadioLibTime_t timeoutUs)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Read currently active IRQ flags.
       \returns IRQ flags.
     */
-    uint32_t getIrqFlags() override;
+    uint32_t getIrqFlags()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Set interrupt on DIO1 to be sent on a specific IRQ bit (e.g. RxTimeout, CadDone).
       \param irq Module-specific IRQ flags.
       \returns \ref status_codes
     */
-    int16_t setIrqFlags(uint32_t irq) override;
+    int16_t setIrqFlags(uint32_t irq)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Clear interrupt on a specific IRQ bit (e.g. RxTimeout, CadDone).
       \param irq Module-specific IRQ flags.
       \returns \ref status_codes
     */
-    int16_t clearIrqFlags(uint32_t irq) override;
+    int16_t clearIrqFlags(uint32_t irq)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Set implicit header mode for future reception/transmission.
@@ -1092,7 +1305,13 @@ class SX126x: public PhysicalLayer {
       \param encoding Encoding to be used. Set to 0 for NRZ, and 2 for whitening.
       \returns \ref status_codes
     */
-    int16_t setEncoding(uint8_t encoding) override;
+    int16_t setEncoding(uint8_t encoding)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*! \copydoc Module::setRfSwitchPins */
     void setRfSwitchPins(uint32_t rxEn, uint32_t txEn);
@@ -1122,34 +1341,64 @@ class SX126x: public PhysicalLayer {
       \brief Get one truly random byte from RSSI noise.
       \returns TRNG byte.
     */
-    uint8_t randomByte() override;
+    uint8_t randomByte()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Enable/disable inversion of the I and Q signals
       \param enable QI inversion enabled (true) or disabled (false);
       \returns \ref status_codes
     */
-    int16_t invertIQ(bool enable) override;
+    int16_t invertIQ(bool enable)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Get modem currently in use by the radio.
       \param modem Pointer to a variable to save the retrieved configuration into.
       \returns \ref status_codes
     */
-    int16_t getModem(ModemType_t* modem) override;
+    int16_t getModem(ModemType_t* modem)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     #if !RADIOLIB_EXCLUDE_DIRECT_RECEIVE
     /*!
       \brief Set interrupt service routine function to call when data bit is received in direct mode.
       \param func Pointer to interrupt service routine.
     */
-    void setDirectAction(void (*func)(void)) override;
+    void setDirectAction(void (*func)(void))
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Function to read and process data bit in direct reception mode.
       \param pin Pin on which to read.
     */
-    void readBit(uint32_t pin) override;
+    void readBit(uint32_t pin)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
     #endif
 
     /*!
@@ -1230,7 +1479,13 @@ class SX126x: public PhysicalLayer {
 #if !RADIOLIB_GODMODE && !RADIOLIB_LOW_LEVEL
   protected:
 #endif
-    Module* getMod() override;
+    Module* getMod()
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
     
     // SX126x SPI command implementations
     int16_t setFs();

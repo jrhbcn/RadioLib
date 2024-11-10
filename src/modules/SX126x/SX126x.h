@@ -472,13 +472,20 @@
   \brief Base class for %SX126x series. All derived classes for %SX126x (e.g. SX1262 or SX1268) inherit from this base class.
   This class should not be instantiated directly from Arduino sketch, only from its derived classes.
 */
+#if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+class SX126x {
+#else
 class SX126x: public PhysicalLayer {
+#endif
   public:
+
+    #if !RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
     // introduce PhysicalLayer overloads
     using PhysicalLayer::transmit;
     using PhysicalLayer::receive;
     using PhysicalLayer::startTransmit;
     using PhysicalLayer::readData;
+    #endif
 
     /*!
       \brief Default constructor.

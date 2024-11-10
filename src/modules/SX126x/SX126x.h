@@ -864,6 +864,8 @@ class SX126x: public PhysicalLayer {
     int16_t readData(String& str, size_t len = 0);
     #endif
 
+    uint32_t getIrqMapped(RadioLibIrqFlags_t irq);
+
     #endif
 
     /*!
@@ -1494,6 +1496,11 @@ class SX126x: public PhysicalLayer {
 #if !RADIOLIB_GODMODE && !RADIOLIB_LOW_LEVEL
   protected:
 #endif
+
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    uint32_t irqMap[10] = { 0 };
+    #endif
+
     Module* getMod()
     #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
     ;
@@ -1548,6 +1555,11 @@ class SX126x: public PhysicalLayer {
   private:
 #endif
     Module* mod;
+
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    float freqStep;
+    size_t maxPacketLength;
+    #endif
 
     uint8_t spreadingFactor = 0, codingRate = 0, ldrOptimize = 0, crcTypeLoRa = 0, headerType = 0;
     uint16_t preambleLengthLoRa = 0;

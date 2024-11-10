@@ -3,10 +3,20 @@
 #include <math.h>
 #if !RADIOLIB_EXCLUDE_SX126X
 
+#if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+SX126x::SX126x(Module* mod) {
+#else
 SX126x::SX126x(Module* mod) : PhysicalLayer(RADIOLIB_SX126X_FREQUENCY_STEP_SIZE, RADIOLIB_SX126X_MAX_PACKET_LENGTH) {
+#endif
   this->mod = mod;
   this->XTAL = false;
   this->standbyXOSC = false;
+
+  #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+  this->freqStep = RADIOLIB_SX126X_FREQUENCY_STEP_SIZE;
+  this->maxPacketLength = RADIOLIB_SX126X_MAX_PACKET_LENGTH;
+  #endif
+
   this->irqMap[RADIOLIB_IRQ_TX_DONE] = RADIOLIB_SX126X_IRQ_TX_DONE;
   this->irqMap[RADIOLIB_IRQ_RX_DONE] = RADIOLIB_SX126X_IRQ_RX_DONE;
   this->irqMap[RADIOLIB_IRQ_PREAMBLE_DETECTED] = RADIOLIB_SX126X_IRQ_PREAMBLE_DETECTED;
@@ -64,7 +74,17 @@ int16_t SX126x::readData(String& str, size_t len) {
 }
 #endif
 
+uint32_t SX126x::getIrqMapped(RadioLibIrqFlags_t irq) {
+  // iterate over all set bits and build the module-specific flags
+  uint32_t irqRaw = 0;
+  for(uint8_t i = 0; i < 8*(sizeof(RadioLibIrqFlags_t)); i++) {
+    if((irq & (uint32_t)(1UL << i)) && (this->irqMap[i] != RADIOLIB_IRQ_NOT_SUPPORTED)) {
+      irqRaw |= this->irqMap[i];
+    }
+  }
 
+  return(irqRaw);
+}
 #endif
 
 int16_t SX126x::begin(uint8_t cr, uint8_t syncWord, uint16_t preambleLength, float tcxoVoltage, bool useRegulatorLDO) {

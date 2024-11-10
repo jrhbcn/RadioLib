@@ -32,7 +32,13 @@ class SX1261 : public SX1262 {
       \param power Output power to be set in dBm.
       \returns \ref status_codes
     */
-    int16_t setOutputPower(int8_t power) override;
+    int16_t setOutputPower(int8_t power)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Check if output power is configurable.
@@ -40,7 +46,13 @@ class SX1261 : public SX1262 {
       \param clipped Clipped output power value to what is possible within the module's range.
       \returns \ref status_codes
     */
-    int16_t checkOutputPower(int8_t power, int8_t* clipped) override;
+    int16_t checkOutputPower(int8_t power, int8_t* clipped)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
 #if !RADIOLIB_GODMODE
   private:

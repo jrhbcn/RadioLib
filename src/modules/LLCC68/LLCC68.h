@@ -61,14 +61,26 @@ class LLCC68: public SX1262 {
       \param dr Data rate struct. Interpretation depends on currently active modem (FSK or LoRa).
       \returns \ref status_codes
     */
-    int16_t setDataRate(DataRate_t dr) override;
+    int16_t setDataRate(DataRate_t dr)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
     
     /*!
       \brief Check the data rate can be configured by this module.
       \param dr Data rate struct. Interpretation depends on currently active modem (FSK or LoRa).
       \returns \ref status_codes
     */
-    int16_t checkDataRate(DataRate_t dr) override;
+    int16_t checkDataRate(DataRate_t dr)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
     
     /*!
       \brief Set modem for the radio to use. Will perform full reset and reconfigure the radio
@@ -76,7 +88,13 @@ class LLCC68: public SX1262 {
       \param modem Modem type to set - FSK, LoRa or LR-FHSS.
       \returns \ref status_codes
     */
-    int16_t setModem(ModemType_t modem) override;
+    int16_t setModem(ModemType_t modem)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
 #if !RADIOLIB_GODMODE
   private:

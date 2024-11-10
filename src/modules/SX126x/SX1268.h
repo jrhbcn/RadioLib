@@ -85,7 +85,13 @@ class SX1268: public SX126x {
       \param freq Carrier frequency to be set in MHz.
       \returns \ref status_codes
     */
-    int16_t setFrequency(float freq) override;
+    int16_t setFrequency(float freq)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Sets carrier frequency. Allowed values are in range from 150.0 to 960.0 MHz.
@@ -102,7 +108,13 @@ class SX1268: public SX126x {
       \param power Output power to be set in dBm.
       \returns \ref status_codes
     */
-    int16_t setOutputPower(int8_t power) override;
+    int16_t setOutputPower(int8_t power)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
     /*!
       \brief Check if output power is configurable.
@@ -110,7 +122,13 @@ class SX1268: public SX126x {
       \param clipped Clipped output power value to what is possible within the module's range.
       \returns \ref status_codes
     */
-    int16_t checkOutputPower(int8_t power, int8_t* clipped) override;
+    int16_t checkOutputPower(int8_t power, int8_t* clipped)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
     
     /*!
       \brief Set modem for the radio to use. Will perform full reset and reconfigure the radio
@@ -118,7 +136,13 @@ class SX1268: public SX126x {
       \param modem Modem type to set - FSK, LoRa or LR-FHSS.
       \returns \ref status_codes
     */
-    int16_t setModem(ModemType_t modem) override;
+    int16_t setModem(ModemType_t modem)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+
 
 #if !RADIOLIB_GODMODE
   private:

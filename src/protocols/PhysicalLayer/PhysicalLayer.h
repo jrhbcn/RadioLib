@@ -4,6 +4,9 @@
 #include "../../TypeDef.h"
 #include "../../Module.h"
 
+#include "PhysicalLayer_common.h"
+
+
 // common IRQ values - the IRQ flags in RadioLibIrqFlags_t arguments are offset by this value
 enum RadioLibIrqType_t {
   RADIOLIB_IRQ_TX_DONE = 0x00,

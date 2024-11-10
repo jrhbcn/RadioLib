@@ -10,4 +10,6 @@
 //#define RADIOLIB_DEBUG_SPI          (1)   // verbose transcription of all SPI communication - produces large debug logs!
 //#define RADIOLIB_VERBOSE_ASSERT     (1)   // verbose assertions - will print out file and line number on failure
 
+#define RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER (1)
+
 #endif

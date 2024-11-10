@@ -851,6 +851,21 @@ class SX126x: public PhysicalLayer {
     */
     int16_t startReceiveDutyCycleAuto(uint16_t senderPreambleLength = 0, uint16_t minSymbols = 8, RadioLibIrqFlags_t irqFlags = RADIOLIB_IRQ_RX_DEFAULT_FLAGS, RadioLibIrqFlags_t irqMask = RADIOLIB_IRQ_RX_DEFAULT_MASK);
 
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+
+    #if defined(RADIOLIB_BUILD_ARDUINO)
+    /*!
+      \brief Reads data that was received after calling startReceive method.
+      \param str Address of Arduino String to save the received data.
+      \param len Expected number of characters in the message. When set to 0, the packet length will be retrieved 
+      automatically. When more bytes than received are requested, only the number of bytes requested will be returned.
+      \returns \ref status_codes
+    */
+    int16_t readData(String& str, size_t len = 0);
+    #endif
+
+    #endif
+
     /*!
       \brief Reads data received after calling startReceive method. When the packet length is not known in advance,
       getPacketLength method must be called BEFORE calling readData!

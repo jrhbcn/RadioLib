@@ -32,6 +32,16 @@ SX126x::SX126x(Module* mod) : PhysicalLayer(RADIOLIB_SX126X_FREQUENCY_STEP_SIZE,
 #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
 
 #if defined(RADIOLIB_BUILD_ARDUINO)
+int16_t SX126x::startTransmit(String& str, uint8_t addr) {
+  return(startTransmit(str.c_str(), addr));
+}
+#endif
+
+int16_t SX126x::startTransmit(const char* str, uint8_t addr) {
+  return(startTransmit((uint8_t*)str, strlen(str), addr));
+}
+
+#if defined(RADIOLIB_BUILD_ARDUINO)
 int16_t SX126x::readData(String& str, size_t len) {
   int16_t state = RADIOLIB_ERR_NONE;
 

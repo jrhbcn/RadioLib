@@ -777,6 +777,34 @@ class SX126x: public PhysicalLayer {
     override;
     #endif
 
+    #if defined(RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER)
+
+    #if defined(RADIOLIB_BUILD_ARDUINO)
+    /*!
+      \brief Interrupt-driven Arduino String transmit method. Unlike the standard transmit method, this one is non-blocking.
+      Interrupt pin will be activated when transmission finishes.
+      \param str Address of Arduino String that will be transmitted.
+      \param addr Node address to transmit the packet to. Only used in FSK mode.
+      \returns \ref status_codes
+    */
+    int16_t startTransmit(String& str, uint8_t addr = 0)
+    #if RADIOLIB_EXCLUDE_SX126X_PHYSICAL_LAYER
+    ;
+    #else
+    override;
+    #endif
+    #endif
+
+    /*!
+      \brief Interrupt-driven Arduino String transmit method. Unlike the standard transmit method, this one is non-blocking.
+      Interrupt pin will be activated when transmission finishes.
+      \param str C-string that will be transmitted.
+      \param addr Node address to transmit the packet to. Only used in FSK mode.
+      \returns \ref status_codes
+    */
+    int16_t startTransmit(const char* str, uint8_t addr = 0);
+
+    #endif
 
     /*!
       \brief Clean up after transmission is done.
